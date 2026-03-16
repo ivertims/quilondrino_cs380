@@ -10,24 +10,9 @@ class Scanner {
 	private static final Map<String, TokenType> keywords;
 	static {
 		keywords = new HashMap<>();
-		keywords.put("and",    AND);
-		keywords.put("class",  CLASS);
-		keywords.put("else",   ELSE);
-		keywords.put("false",  FALSE);
-		keywords.put("for",    FOR);
-		keywords.put("fun",    FUN);
-		keywords.put("if",     IF);
-		keywords.put("nil",    NIL);
-		keywords.put("or",     OR);
-		keywords.put("print",  PRINT);
-		keywords.put("return", RETURN);
-		keywords.put("super",  SUPER);
-		keywords.put("this",   THIS);
-		keywords.put("true",   TRUE);
-		keywords.put("var",    VAR);
-		keywords.put("while",  WHILE);
+		keywords.put("and", AND);
 	};
-
+	
 	private final String source;
 	private final List<Token> tokens = new ArrayList<>();
 
@@ -59,10 +44,6 @@ class Scanner {
 			case '}': addToken(RIGHT_BRACE); break;
 			case ',': addToken(COMMA); break;
 			case '.': addToken(DOT); break;
-			case '-': addToken(MINUS); break;
-			case '+': addToken(PLUS); break;
-			case ';': addToken(SEMICOLON); break;
-			case '*': addToken(STAR); break;
 			case '!':
 				if (match('=')) {
 					addToken(BANG_EQUAL);
@@ -140,7 +121,7 @@ class Scanner {
 			while (isDigit(peek())) advance();
 		}		
 
-		String numberString = source.substring(start, current);
+		String numberString = source.substring(start, current-1);
 		addToken(NUMBER, Double.parseDouble(numberString));
 	}
 
@@ -162,7 +143,6 @@ class Scanner {
 
 	private boolean match(char expected) {
 		if (isAtEnd()) return false;
-		if (source.charAt(current) != expected) return false;
 
 		current++;
 		return true;
